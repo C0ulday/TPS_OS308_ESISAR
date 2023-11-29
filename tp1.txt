@@ -80,4 +80,57 @@ On obtient : 0022 # les 3 derniers chiffres nous interessent dans la determinati
 
 Modifiez ce masque pour que les droits à la création soient pour les fichiers rw- rw- --- et pour les répertoires rwx rwx --x. Vérifiez que votre nouveau masque
 fonctionne correctement.
-reponse : rw- rw- --- correspond à 660 donc en umask à 006
+reponse : rw- rw- --- correspond à 660 donc en umask à 006 # a revoir cette question
+
+
+Redirection des entrées/sorties
+Avant de commencer, visualisez la liste des utilisateurs connectés en utilisant la commande who.
+
+Question 1 : Insérez le résultat de la commande who dans un fichier file5.txt. Visualisez le contenu du
+fichier file5.txt.
+reponse : who > file5.txt # le > signifie redirige sortie vers
+        cat file5.txt #p cat pour afficher le contenu 
+
+Question 2 : Tapez la commande pwd > file5.txt. Visualisez le contenu du fichier file5.txt. Que
+remarquez-vous ?
+reponse : cat file5.txt # affiche /home/sita/esisar/tps/os/resolution/tp1
+
+Question 3 : Tapez la commande ls >> file5.txt. Visualisez le contenu du fichier file5.txt. Que
+remarquez-vous ?
+reponse : la commande affiche 
+/home/sita/esisar/tps/os/resolution/tp1
+file3.sh
+file5.txt
+tp1.txt
+
+donc le > écrase le fichier par la nouvelle sortie et >> ajoute justye la nouvelle sortie
+
+Question 4 : Tapez la commande ls -l > file5.txt. Que remarquez-vous ? Même question avec la
+commande ls -l 2> file5.txt.
+
+reponse : ls -l > file5.txt # affiche 
+total 12
+-rwx------ 1 sita sita   38 29 nov.  18:52 file3.sh
+-rw-r--r-- 1 sita sita    0 29 nov.  19:46 file5.txt
+-rw-r--r-- 1 sita sita 5171 29 nov.  19:46 tp1.txt
+
+ls -l 2> file5.txt # le chiffre 2 rrepresnete la sortie des erreurs : stderr. La commande affiche 
+total 12
+-rwx------ 1 sita sita   38 29 nov.  18:52 file3.sh
+-rw-r--r-- 1 sita sita    0 29 nov.  19:47 file5.txt
+-rw-r--r-- 1 sita sita 5357 29 nov.  19:46 tp1.txt
+
+Question 5 : Pour terminer cet exercice, nous allons lister le contenu d'un dossier qui n'existe pas.
+Pour chacune des trois commandes suivantes, expliquez ce qui est affiché à l'écran (et pourquoi !) et
+ce que contient le fichier erreur.txt après l'exécution de chacune des commandes.
+Question 5a : ls /n/existe/pas > erreur.txt
+reponse : ls: impossible d'accéder à '/n/existe/pas': Aucun fichier ou dossier de ce type
+# c'est normal fichier inextistant donc rien dans stdout
+
+Question 5b : ls /n/existe/pas 2> erreur.txt
+reponse : le message ls: impossible d'accéder à '/n/existe/pas': Aucun fichier ou dossier de ce type
+est redirigé dans le fichier texte erreur.txt à cause du 2 de la commande
+
+Question 5c : ls /n/existe/pas &> erreur.txt
+reponse : le message ls: impossible d'accéder à '/n/existe/pas': Aucun fichier ou dossier de ce type
+est redirigé dans le fichier texte erreur.txt à cause du & de la commande : qui signifie sortie stdout et stderr

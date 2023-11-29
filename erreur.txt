@@ -1,0 +1,1 @@
+ls: impossible d'accéder à '/n/existe/pas': Aucun fichier ou dossier de ce type
