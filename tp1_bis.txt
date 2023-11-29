@@ -66,3 +66,82 @@ bash: ./symb_lien: Aucun fichier ou dossier de ce type
 Pourquoi ?
 On a changé le nom de file4.sh donc le lien symbolique ne pointe plus vers le même nom de fichier 
 contrairement au lien physique qui pointe tjrs sur le contenu du fichier file4.sh devenu test_liens
+
+########
+Commande find
+
+Question 1 : Recherchez, en une seule commande, tous les fichiers qui contiennent dans leur nom la
+chaîne de caractères « gre » dans les répertoires /bin et /usr/bin.
+reponse : find /bin /usr/bin -type f -name "*gre*" # type f = type fichier 
+
+
+Question 2 : Recherchez dans votre dossier personnel tous les fichiers qui ont été modifiés depuis
+moins de 2 jours.
+reponse: find ~/ -type f -mtime -2
+
+
+Question 3 : Recherchez, dans les répertoires /bin et /usr/bin, en une seule commande, tous les
+fichiers réguliers exécutables par tous et affichez les informations relatives à ceux-ci sous cette forme :
+N° d’inoeud
+droit en octal
+nom du fichier avec son chemin
+reponse:
+find /bin /usr/bin -type f -executable -exec stat -c "%i %a %n" {} \; #pour chaque fichier exécuté on met en place
+le format voulu
+
+Question 4 : Recherchez dans votre répertoire personnel les fichiers qui ont une taille inférieure à
+250ko.
+reponse : find ~/ -type f -size -250k
+
+#### suite fait avec chat GPT (mdr flemme)
+
+Commande grep
+Pour cet exercice, toutes les recherches vont se faire dans les fichiers .h du répertoire /usr/include.
+Question 1 : Avec la commande grep -v, recherchez toutes les lignes qui ne contiennent pas la chaîne
+de caractères « printf ».
+reponse : grep -v 'printf' /usr/include/*.h
+Explications :
+    grep -v 'printf': Recherche toutes les lignes qui ne contiennent pas la chaîne "printf".
+    /usr/include/*.h: Spécifie les fichiers .h dans le répertoire /usr/include.
+
+Question 2 : Recherchez toutes les lignes qui contiennent une succession de trois caractères
+identiques compris entre a et e.
+reponse : grep -E '(a{3,}|b{3,}|c{3,}|d{3,}|e{3,})' /usr/include/*.h
+Explications :
+    grep -E: Active les expressions régulières étendues.
+    (a{3,}|b{3,}|c{3,}|d{3,}|e{3,}): Recherche une succession d'au moins trois caractères identiques parmi a, b, c, d, ou e.
+    /usr/include/*.h: Spécifie les fichiers .h dans le répertoire /usr/include.
+
+#######
+
+Analyse d'un fichier de log
+Avant de commencer, téléchargez le fichier chat.log
+Pour chaque question, la réponse doit être trouvée en une et une seule ligne !
+
+Question 1 : le nombre de lignes de ce fichier de log
+reponse : wc -l chat.log # 355
+
+Question 2 : le nombre de messages échangés (MESSAGE_SENT)
+reponse : grep 'MESSAGE_SENT' chat.log | wc -l #340
+
+Question 3 : le nombre de message de chaque type
+reponse : awk '{print $3}' chat.log | sort | uniq -c #awk extrait et affiche à l'aide print la 3 eme colonne
+sort trie ety uniq -c compte les occruences
+#affiche 
+    1 LOGIN_FAIL
+    7 LOGIN_SUCCESS
+    7 LOGOUT
+    340 MESSAGE_SENT
+
+Question 4 : le nombre de message de chaque type, avec affichage par nombre de messages
+décroissant
+Question 5 : qui écoute le plus les autres
+Question 6 : le hit parade des trois plus gros bavards, avec les lignes précédées de 1,2 et 3
+Question 7 : la minute durant laquelle il y a eu le plus de message échangés
+Question 8 : qui se parle le plus à lui-même
+Question 9 : qui a le plus grand score nombre de messages envoyés + nombre de messages reçus
+version 1 : en comptant deux fois le message si la personne se parle à elle-même
+version 2 : en comptant une seule fois le message si la personne se parle à elle-même
+Question 10 : Transformer les lignes MESSAGE_SENT pour obtenir des messages de la forme :
+20120930 15:00 MESSAGE_SENT mcgee --> dinozzo
+20120930 15:00 MESSAGE_SENT dinozzo se parle à lui-même
