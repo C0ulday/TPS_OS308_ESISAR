@@ -34,14 +34,35 @@ total 28
 
 
 
-
 Question 2 : Copiez symb_lien dans un fichier symb_test. Affichez le contenu de symb_test avec la
 commande cat. Qu’obtenez-vous ?
+reponse : cp symb_lien symb_test
+        cat symb_test #affiche :
+        #!/bin/bash
+echo Mon deuxieme script !
+
 Question 3 : Modifiez les droits de symb_test afin de pouvoir l’exécuter. Exécutez-le. Qu’obtenez-vous
 ?
+reponse : chmod 700 symb_test
+    ./symb_test #affiche 
+    Mon deuxieme script !
+
 Question 4 : Renommez file4.sh en test_liens.sh. Affichez le numéro d’i-nœud de test_liens.sh. A-t-il
 changé ?
+reponse : mv file4.sh test_liens.sh
+    ls -li test_liens.sh #affiche 
+    5279966 -rw-r--r-- 2 sita sita 38 29 nov.  20:00 test_liens.sh
+Le numéro de noeud n'a pas changé
+
 Question 5 : Modifiez les droits de phys_lien afin de pouvoir l’exécuter.
 Exécutez phys_lien. Que se passe-t-il ?
+reponse : chmod 700 phys_lien
+le programme affiche bien : Mon deuxieme script !
+
 Exécutez symb_lien. Que se passe-t-il ?
+reponse : ./symb_lien #affiche
+bash: ./symb_lien: Aucun fichier ou dossier de ce type
+
 Pourquoi ?
+On a changé le nom de file4.sh donc le lien symbolique ne pointe plus vers le même nom de fichier 
+contrairement au lien physique qui pointe tjrs sur le contenu du fichier file4.sh devenu test_liens
