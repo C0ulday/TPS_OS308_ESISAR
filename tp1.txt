@@ -1,0 +1,81 @@
+Réponses aux questions Tp1 OS308
+
+Commande ls et caractères génériques
+Dans le dossier /usr/bin...
+Remarques : dans certains shell le caractère de négation est soit ! soit ^
+u = user g = groupe o = others ? = pour dire un caractère quelconque à une position donnée
+~ = chemin dossier personnel 
+
+r = read
+w = write
+x = execute
+en octal 7 = tous les droits cad rwx pour le reste c'est juste en focntion de la position 
+convertir en décimal exemple r-x : position de x à 0 et r à 2 donc : 2⁰ + 2² = 5
+
+Question 1 : Listez les fichiers dont le nom est formé par exactement quatre lettres.
+reponse : ls -d [a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z]
+
+Question 2 : Listez les fichiers dont le nom est formé par au-moins quatre lettres.
+reponse : ls -d [a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z]* # * n'importe quoi 
+
+Question 3 : Listez les fichiers dont le nom contient le caractère ‘-‘.
+reponse : ls -d *-*
+
+Question 4 : Listez les fichiers dont le nom contient le caractère ‘-‘ placé en 3ème position.
+reponse : ls -d ??-*
+
+Question 5 : Listez les fichiers dont le nom commence par la lettre a, b ou c.
+reponse : ls -d [abc]*
+
+Question 6 : Listez les fichiers dont le nom ne commence pas par la lettre a, e, i, o ou u.
+reponse : ls -d [^aeiou] *
+
+Question 7 : Listez les fichiers dont le nom ne commence pas par une lettre comprise entre c et v.
+reponse : ls -d [^c-v]*
+
+Gestion des droits d’accès
+Pré requis : Créez un fichier file3.sh dans votre répertoire TP1, qui contient :
+#!/bin/bash
+echo Mon premier script !
+
+Question 1 : Quels sont les droits d’accès de ce fichier ? 
+reponse : -rw-r--r-- 1 sita sita 38 29 nov.  18:52 file3.sh # j'ai le droit de lire et ecrire, les autres que de lire
+
+Exécutez ce fichier avec ./file3.sh. Que se passe-t-il ? 
+reponse : bash: ./file3.sh: Permission non accordée
+
+Changez vos droits pour rendre ce fichier exécutable. Exécutez à nouveau ce fichier. Que se
+passe-t-il ?
+reponse : chmod 700 file3.sh # 7 me donne tout les dorits (droit user), 0 n'accorde rien à mon groupe , 0 n'accorde rien aux autres
+le programme affiche : Mon premier script !
+
+Question 2 : Quelle commande permet d’afficher les droits de votre répertoire personnel ? Votre
+commande ne doit afficher qu’une seule ligne.
+reponse : ls -ld ~
+
+Question 3 : Modifiez les droits de votre répertoire personnel en 700. 
+reponse : chmod 700 ~
+
+Votre binôme arrive-t-il à afficher la liste des fichiers de votre répertoire personnel ? Votre binôme arrive-t-il à exécuter le
+contenu de votre fichier file3.sh ?
+reponse : normalement non, mais pas testé
+
+Question 4 : Ajoutez le droit d’exécution à votre répertoire personnel pour ceux de votre groupe et les
+autres. Votre commande doit utilisation la notation symbolique.
+reponse : chmod g+rwx,o+rwx ~ # + : add 
+
+Question 5 : Votre binôme arrive-t-il à lire maintenant le contenu de votre répertoire personnel ?
+Votre binôme arrive-t-il maintenant à exécuter le contenu de votre fichier file3.sh ?
+reponse : normalement il doit pouvoir, mais pas testé
+
+Question 6 : Remettez les droits initiaux de votre répertoire personnel (ceux de la question 2) en
+utilisant la notation en octal.
+reponse : droits initaux : drwx------ #d pour directory
+donc chmod 700 ~
+
+Question 7 : Affichez le masque courant. 
+reponse : umask 
+On obtient : 0022
+
+Modifiez ce masque pour que les droits à la création soient pour les fichiers rw- rw- --- et pour les répertoires rwx rwx --x. Vérifiez que votre nouveau masque
+fonctionne correctement.
