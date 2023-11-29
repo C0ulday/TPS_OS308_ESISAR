@@ -1,0 +1,47 @@
+Liens physiques et liens symboliques
+
+remarques :     
+    Lien Symbolique (ou lien mou) :
+        Un lien symbolique est un fichier distinct qui contient une référence au chemin d'un autre fichier ou répertoire.
+        Il crée une association indirecte entre le lien symbolique et la cible.
+        Si la cible est supprimée ou déplacée, le lien symbolique peut devenir "cassé" (pointe vers un emplacement invalide).
+        Création : ln -s cible lien_symbolique
+
+    Lien Physique (ou lien dur) :
+        Un lien physique est une autre entrée de répertoire qui pointe vers le même contenu de disque que l'original.
+        Il crée une association directe entre le lien physique et la cible.
+        Si la cible est supprimée, le lien physique continue de pointer vers le contenu tant que d'autres liens physiques existent.
+        Création : ln cible lien_physique
+Pré requis : Créez un fichier file4.sh dans votre répertoire TP1, qui contient :
+#!/bin/bash
+echo Mon deuxieme script !
+
+Question 1 : Créez un lien physique phys_lien et un lien symbolique symb_lien sur le fichier file4.sh.
+Visualisez le contenu du répertoire TP1 en affichant les numéros d’i-nœuds.
+reponse : ln file4.sh phys_lien
+        ln -s file4.sh symb_lien
+        ls -li tp1 #a faire en dehors de tp1 (dans dossier parent)
+        #dernier commande affiche :
+total 28
+5279984 -rw-r--r-- 1 sita sita   82 29 nov.  19:53 erreur.txt
+5276228 -rwx------ 1 sita sita   38 29 nov.  18:52 file3.sh
+5279966 -rw-r--r-- 2 sita sita   38 29 nov.  20:00 file4.sh
+5279963 -rw-r--r-- 1 sita sita    0 29 nov.  19:47 file5.txt
+5279966 -rw-r--r-- 2 sita sita   38 29 nov.  20:00 phys_lien
+5279988 lrwxrwxrwx 1 sita sita    8 29 nov.  20:03 symb_lien -> file4.sh
+5280003 -rw-r--r-- 1 sita sita  961 29 nov.  20:03 tp1_bis.txt
+5247452 -rw-r--r-- 1 sita sita 6189 29 nov.  19:55 tp1.txt
+
+
+
+
+Question 2 : Copiez symb_lien dans un fichier symb_test. Affichez le contenu de symb_test avec la
+commande cat. Qu’obtenez-vous ?
+Question 3 : Modifiez les droits de symb_test afin de pouvoir l’exécuter. Exécutez-le. Qu’obtenez-vous
+?
+Question 4 : Renommez file4.sh en test_liens.sh. Affichez le numéro d’i-nœud de test_liens.sh. A-t-il
+changé ?
+Question 5 : Modifiez les droits de phys_lien afin de pouvoir l’exécuter.
+Exécutez phys_lien. Que se passe-t-il ?
+Exécutez symb_lien. Que se passe-t-il ?
+Pourquoi ?
