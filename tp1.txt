@@ -75,7 +75,9 @@ donc chmod 700 ~
 
 Question 7 : Affichez le masque courant. 
 reponse : umask 
-On obtient : 0022
+On obtient : 0022 # les 3 derniers chiffres nous interessent dans la determination des droits
+#rw-r--r-- pour les fichiers et rwxr-xr-x pour les répertoires
 
 Modifiez ce masque pour que les droits à la création soient pour les fichiers rw- rw- --- et pour les répertoires rwx rwx --x. Vérifiez que votre nouveau masque
 fonctionne correctement.
+reponse : rw- rw- --- correspond à 660 donc en umask à 006
