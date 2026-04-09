@@ -1,4 +1,5 @@
 # OS308 - Operating Systems Labs (ESISAR - Grenoble INP)
+# (Ressources in French)
 
 ## Overview
 
